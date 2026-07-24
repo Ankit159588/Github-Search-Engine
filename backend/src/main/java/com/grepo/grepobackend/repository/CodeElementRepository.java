@@ -17,8 +17,8 @@ public interface CodeElementRepository extends JpaRepository<CodeElement, Long> 
     @Query("SELECT ce FROM CodeElement ce " +
             "JOIN ce.sourceFile sf " +
             "JOIN sf.repository gr " +
-            "WHERE (:query IS NULL OR LOWER(ce.name) LIKE LOWER(CONCAT('%', :query, '%')) " +
-            "       OR LOWER(ce.signature) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+            "WHERE (:query IS NULL OR LOWER(ce.name) LIKE LOWER(CONCAT('%', CAST(:query AS string), '%')) " +          // CHANGED
+            "       OR LOWER(ce.signature) LIKE LOWER(CONCAT('%', CAST(:query AS string), '%'))) " +                   // CHANGED
             "AND (:type IS NULL OR ce.type = :type) " +
             "AND (:repoName IS NULL OR gr.repoName = :repoName)")
     List<CodeElement> search(@Param("query") String query,

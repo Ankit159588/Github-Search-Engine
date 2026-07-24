@@ -1,19 +1,29 @@
 import { useState } from "react";
 
-const Header = () => {
+const Header = ({
+  isIndexing,
+  setIsIndexing,
+  setIndexedUsername,
+  setIndexedRepos,
+}) => {
   const [username, setUsername] = useState("");
 
   const handleIndexUser = async () => {
-    if (!username.trim()) return;
+    if (!username.trim() || isIndexing) return;
+
+    setIsIndexing(true);
 
     try {
       const response = await fetch(
         `http://localhost:8080/api/index/${username}`,
       );
       const data = await response.json();
-      console.log("Indexed repos:", data);
+      setIndexedUsername(username);
+      setIndexedRepos(data);
     } catch (error) {
       console.error("Failed to index user:", error);
+    } finally {
+      setIsIndexing(false);
     }
   };
 
@@ -29,14 +39,16 @@ const Header = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="github username"
-          className="bg-transparent text-sm text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
+          disabled={isIndexing}
+          className="bg-transparent text-sm text-neutral-100 placeholder:text-neutral-500 focus:outline-none disabled:opacity-50"
         />
       </div>
       <button
         onClick={handleIndexUser}
-        className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold text-neutral-100"
+        disabled={isIndexing}
+        className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold text-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        index user
+        {isIndexing ? "indexing..." : "index user"}
       </button>
     </header>
   );

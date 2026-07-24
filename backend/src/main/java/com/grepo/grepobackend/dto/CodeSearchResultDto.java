@@ -13,4 +13,5 @@ public class CodeSearchResultDto {
     public String type;
     public String name;
     public String signature;
+    public Long sourceFileId;
 }

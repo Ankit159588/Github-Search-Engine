@@ -17,3 +17,4 @@ backend/.idea/
 # Frontend
 frontend/node_modules/
 frontend/dist/
+backend/cloned-repos/

@@ -24,4 +24,5 @@ public class SourceFile {
 
     private String filePath;
     private String packageName;
+    private Long sourceFileId;
 }

@@ -36,7 +36,8 @@ public class SearchService {
                 el.getStartLine(),
                 el.getType().name(),
                 el.getName(),
-                el.getSignature()
+                el.getSignature(),
+                el.getSourceFile().getId()
         );
     }
 }
